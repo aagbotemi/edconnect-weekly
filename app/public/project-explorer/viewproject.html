@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+</head>
+<body>
+<!--<header>
+    <h1>Project Explorer</h1>
+    <h2>One Stop Database for Academic Projects</h2>
+</header>
+<nav>
+    <a href="index.html">Home</a>
+    <a href="search.html">Search</a>
+    <a href="login.html">Login</a>
+    <a href="register.html">Register</a>
+    <a href="createproject.html">Submit</a>
+</nav>-->
+    <nav class="navbar navbar-dark bg-primary">
+        <div class="container-fluid align-center d-flex">
+            <h1 class="display-6 text-light mr-3">Project Explorer</h1>
+            <form class="form-inline" name="searchForm" >
+                <input class="form-control me-2" type="search" placeholder="Search Projects" aria-label="Search Projects">
+                <button class="btn btn-outline-light ml-2" type="submit">Search</button>
+                <p class="text-light ml-2">Submit</p>
+            </form>
+
+            <a href="#" class="text-light ml-auto mr-3">Sign up</a>
+            <a href="#" class="text-light">Login</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section class="mt-2">
+            <h1>Project 1</h1>
+            <div class="row bg-light p-3">
+                <div class="col-3">
+                    <div>Created by</div>
+                    <div>Ade Chris</div>
+                </div>
+                <div class="col-3">
+                    <div>Date Created</div>
+                    <div>2020-08-03</div>
+                </div>
+                <div class="col-3">
+                    <div>Last Updated</div>
+                    <div>2020-08-03</div>
+                </div>
+                <div class="col-3 d-flex justify-content-end">
+                    <button class="btn btn-primary">Edit Project</button>
+                </div>
+            </div>
+        </section>
+        <section class="mt-2">
+            <form name="editProject">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h1>Project Abstract</h1>
+                        <hr />
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem eveniet explicabo omnis quae alias at autem animi sequi doloribus cum.</p>
+
+                        <div class="form-group">
+                            <label class="form-label">Comments</label>
+                            <textarea type="text" rows="3" class="form-control" name="comments" required placeholder="Leave a comment" ></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <hr />
+                        <p class="text-center">No comments added yet</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h1>Project Details</h1>
+                        <div class="card">
+                            <div class="card-header">
+                              <h5 class="card-title">Author(s)</h5>
+                            </div>
+                            <div class="card-body">
+                              <p class="card-text">Ade Chris</p>
+                            </div>
+                            <div class="card-footer">
+                                <a href="#">#web</a>
+                            </div>
+                        </div>
+                        <div class="card mt-3">
+                            <div class="card-header">
+                              <h5 class="card-title">Project files</h5>
+                            </div>
+                            <div class="card-body">
+                              <p class="card-text text-center">No file uploaded yet</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </form>
+        </section>
+    </main>
+    <footer class="container d-flex align-center justify-content-end bg-light mt-2 py-3">
+        <p class="mr-1 mb-0">Project Explorer</p> &copy; 2020 <strong class="ml-1">Edconnect</strong>
+    </footer>
+</body>
+</html>
