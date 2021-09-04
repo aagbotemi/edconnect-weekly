@@ -8,7 +8,8 @@ class DataModel {
     }
 
     getById(id) {
-
+        let user = this.data.find(item => item.id === id)
+        return user ? user : null
     }
 
     save(obj) {
@@ -20,11 +21,24 @@ class DataModel {
     }
 
     update(obj, id) {
-
+        let updatedUser = this.data.find(item => item.id === id);
+        if (updatedUser) {
+            for (const key in obj) {
+                updatedUser[key] === obj[key]
+            }
+            return true
+        }
+        return false
     }
 
     delete(id) {
-
+        let deletedUser = this.data.find(item => item.id === id);
+        let index = this.data.indexOf(deletedUser)
+        if (deletedUser) {
+            this.data.splice(index, 1)
+            return true
+        }
+        return false
     }
 
     // this method will be overriden in the sub classes

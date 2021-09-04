@@ -2,29 +2,55 @@ const DataModel = require('./data_model');
 
 class User {
     constructor(id, firstname, lastname, email, password, matricNumber, program, graduationYear) {
-
+        this.id = id;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.password = password;
+        this.matricNumber = matricNumber;
+        this.program = program;
+        this.graduationYear = graduationYear;
     }
 
     getFullName() {
-
+        return `${this.firstname} ${this.lastname}`
     }
 }
 
 class Users extends DataModel {
     authenticate(email, password) {
-
+        let authenticatedUser = this.data.find(item => item.email === email && item.password === password)
+        return authenticatedUser ? true : false;
     }
 
     getByEmail(email) {
-
+        let userEmail = this.data.find(item => item.email === email)
+        return userEmail ? userEmail : null;
     }
 
     getByMatricNumber(matricNumber) {
-
+        let userMatricNumber = this.data.find(item => item.matricNumber === matricNumber)
+        return userMatricNumber ? userMatricNumber : null
     }
 
     validate(obj) {
+        let validatedUser = false
 
+        for (const key in obj) {
+            if (obj[key] !== "" || obj[key] !== null || obj[key] !== undefined) {
+                validatedUser = true;
+            }
+        }
+
+        let passwordCheck = obj.password.length >= 7;
+        let emailCheck = this.data.find(item => item.email === obj.email);
+        let matricNumberCheck = this.data.find(item => item.matricNumber === obj.matricNumber);
+
+        if (validatedUser && passwordCheck && !emailCheck && !matricNumberCheck) {
+            return true
+        } else {
+            return false
+        }
     }
 }
 
