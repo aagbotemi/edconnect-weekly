@@ -34,23 +34,39 @@ class Users extends DataModel {
     }
 
     validate(obj) {
-        let validatedUser = false
+        // let validatedUser = false
+        this.errors = []
+        let errorMsg
 
         for (const key in obj) {
-            if (obj[key] !== "" || obj[key] !== null || obj[key] !== undefined) {
-                validatedUser = true;
+            if (obj[key] === "" || obj[key] === null || obj[key] === undefined) {
+                errorMsg = `${key} should not be empty`
+                this.errors.push(errorMsg)
             }
         }
 
-        let passwordCheck = obj.password.length >= 7;
         let emailCheck = this.data.find(item => item.email === obj.email);
-        let matricNumberCheck = this.data.find(item => item.matricNumber === obj.matricNumber);
-
-        if (validatedUser && passwordCheck && !emailCheck && !matricNumberCheck) {
-            return true
-        } else {
-            return false
+        if (emailCheck) {
+            errorMsg = `A user with ${obj.email} address already exists`
+            this.errors.push(errorMsg)
         }
+        
+        let matricNumberCheck = this.data.find(item => item.matricNumber === obj.matricNumber);
+        if (matricNumberCheck) {
+            errorMsg = `A user with ${obj.matricNumber} already exists`
+            this.errors.push(errorMsg)
+        }
+
+        let passwordCheck = obj.password.length < 7;
+        if (passwordCheck) {
+            errorMsg = 'Password should have at least 7 characters'
+            this.errors.push(errorMsg)
+        }
+
+        if (this.errors.length == 0) {
+            return true
+        }
+        return false
     }
 }
 

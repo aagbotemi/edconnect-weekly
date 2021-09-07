@@ -13,22 +13,32 @@ class Project {
 
 class Projects extends DataModel {
     validate(obj) {
-        let validatedProject = false;
+        this.errors = []
+        let errorMsg
+        
+        let authorsArray = Array.isArray(obj.authors)
+        if (!authorsArray) {
+            this.errors.push("Authors should be an array")
+        }
+
+        let tagsArray = Array.isArray(obj.tags)
+        if (!tagsArray) {
+            this.errors.push("Tags should be an array")
+        }
 
         for (const key in obj) {
-            if (obj[key] !== "" || obj[key] !== null || obj[key] !== undefined) {
-                validatedProject = true;
+            if (obj[key] === "" || obj[key] === null || obj[key] === undefined) {
+                if (key !== 'authors' && key !== 'tags') {
+                    errorMsg = `${key} should not be empty`
+                    this.errors.push(errorMsg)
+                }
             }
         }
 
-        let authorsCheck = Array.isArray(obj.authors)
-        let tagsCheck = Array.isArray(obj.tags)
-
-        if (validatedProject && authorsCheck && tagsCheck) {
+        if (this.errors.length == 0) {
             return true
-        } else {
-            return false
         }
+        return false
     }
 }
 
