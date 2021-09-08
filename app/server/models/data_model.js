@@ -9,10 +9,10 @@ class DataModel {
     }
 
     getById(id) {
-        let user = this.data.find(item => item.id === id)
+        let user = this.data.find(item => item.id == id)
         return user ? user : null
     }
-
+    
     save(obj) {
         if (this.validate(obj)) {
             this.data.push(obj);
@@ -25,7 +25,7 @@ class DataModel {
         let updatedUser = this.data.find(item => item.id === id);
         if (updatedUser) {
             for (const key in obj) {
-                updatedUser[key] === obj[key]
+                updatedUser[key] = obj[key]
             }
             return true
         }
