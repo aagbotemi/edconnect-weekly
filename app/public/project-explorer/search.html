@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+</head>
+<body>
+    <!--<header>
+        <h1>Project Explorer</h1>
+        <h2>One Stop Database for Academic Projects</h2>
+    </header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="search.html">Search</a>
+        <a href="login.html">Login</a>
+        <a href="register.html">Register</a>
+        <a href="createproject.html">Submit</a>
+    </nav>-->
+    <nav class="navbar navbar-dark bg-primary">
+        <div class="container-fluid align-center d-flex">
+            <h1 class="display-6 text-light mr-3">Project Explorer</h1>
+            <form class="form-inline" name="searchForm" >
+                <input class="form-control me-2" type="search" placeholder="Search Projects" aria-label="Search Projects">
+                <button class="btn btn-outline-light ml-2" type="submit">Search</button>
+                <p class="text-light ml-2">Submit</p>
+            </form>
+
+            <a href="#" class="text-light ml-auto mr-3">Sign up</a>
+            <a href="#" class="text-light">Login</a>
+        </div>
+    </nav>
+    <main class="container">
+        <section>
+            <!--<h1>Search Project By</h1>-->
+            <h1>Photo Gallery</h1>
+            <div class="bg-light p-3">
+                <form class="form-row form-inline w-100">
+                    <div class="form-group flex-grow-1">
+                        <input type="text" name="searchTerm" class="form-control form-control-lg w-100" placeholder="Search project name, authors, abstract, tags" />
+                    </div>
+                    <div class="d-flex form-group mx-3">
+                        <label class="form-label">Search By</label>
+                        <select name="searchType" class="form-control form-control-lg flex-grow-1">
+                            <option value="Name">Name</option>
+                            <option value="Abstract">Abstract</option>
+                            <option value="Authors">Authors</option>
+                            <option value="Tags">Tags</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-lg btn-primary">Submit</button>
+                </form>
+            </div>
+        </section>
+        <article class="mt-3">
+            <div class="d-flex align-items-baseline">
+                <h2 class="display-6">All Projects</h2><span>(0 results)</span>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="card col-md-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Project Title</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Author 1, Author 2</h6>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="card-link">#html</a>
+                        <a href="#" class="card-link">#css</a>
+                        <a href="#" class="card-link">#javascript</a>
+                      </div>
+                </div>
+                <div class="card col-md-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Project Title</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Author 1, Author 2</h6>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="card-link">#html</a>
+                        <a href="#" class="card-link">#css</a>
+                        <a href="#" class="card-link">#javascript</a>
+                      </div>
+                </div>
+            </div>
+            <!--<div>
+                <h3>Project 1</h3>
+                <ul>
+                    <li>Name: Project 1</li>
+                    <li>Description: Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veritatis perspiciatis at sunt praesentium aspernatur. Quod?</li>
+                    <li>Program: Computer Science</li>
+                    <li>Authors: Project 1</li>
+                    <li>Tags: #Asphyxia, #GSW</li>
+                    <li>Year: 2018</li>
+                </ul>
+            </div>-->
+        </article>
+    </main>
+    <footer class="container d-flex align-center justify-content-end bg-light mt-2 py-3">
+        <p class="mr-1 mb-0">Project Explorer</p> &copy; 2020 <strong class="ml-1">Edconnect</strong>
+    </footer>
+    
+    <script src="js/app.js"></script>
+</body>
+</html>

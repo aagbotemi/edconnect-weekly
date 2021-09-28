@@ -1,35 +1,19 @@
 class DataModel {
-    constructor(){
+    constructor() {
         this.data = [];
         this.errors = [];
     }
 
-    getAll(){
+    getAll() {
         return this.data;
     }
 
-    getById(id){
-        for (const obj of this.data) {
-            if (obj.id === id){
-                return obj;
-            }
-        };
-        return null;
+    getById(id) {
+        let user = this.data.find(item => item.id == id)
+        return user ? user : null
     }
-
-    getIndexOf(id){
-        let index = -1;
-
-        for (const obj of this.data) {
-            index++;
-            if (obj.id === id){
-                return index;
-            }
-        };
-        return index;
-    }
-
-    save(obj){
+    
+    save(obj) {
         if (this.validate(obj)) {
             this.data.push(obj);
             return true;
@@ -37,36 +21,30 @@ class DataModel {
         return false;
     }
 
-    update(obj, id){
-        const index = this.getIndexOf(id);
-        this.errors = [];
-
-        if(index > -1) {
-            const temp = this.data[index];
-            for (const property in obj) {
-                temp[property] = obj[property];
+    update(obj, id) {
+        let updatedUser = this.data.find(item => item.id === id);
+        if (updatedUser) {
+            for (const key in obj) {
+                updatedUser[key] = obj[key]
             }
-
-            this.data[index] = temp; 
-            return true;
+            return true
         }
+        return false
+    }
 
-        this.errors.push("object id not found");
+    delete(id) {
+        let deletedUser = this.data.find(item => item.id === id);
+        let index = this.data.indexOf(deletedUser)
+        if (deletedUser) {
+            this.data.splice(index, 1)
+            return true
+        }
+        return false
+    }
+
+    // this method will be overriden in the sub classes
+    validate(obj) {
         return false;
-    }
-
-    delete(id){
-        let index = this.getIndexOf(id);
-        if (index > -1){
-            this.data.splice(index, 1);
-            return true;
-        }
-        return false; 
-    }
-
-    validate(obj){
-        // this method will be overriden in the sub classes
-        return true;
     }
 }
 
