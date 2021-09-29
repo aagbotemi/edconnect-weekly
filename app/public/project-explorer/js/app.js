@@ -274,11 +274,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
     else if ((url.startsWith('search.html') || url.startsWith('profile.html') || url.startsWith('editProject.html'))) {
         logOut();
     }
-
 });
 
-/*
-const programDropdown = document.getElementById('Program');
+/*const programDropdown = document.getElementById('Program');
 const graduationYearsDropdown = document.getElementById('GraduationYear');
 const registerBtn = document.getElementById('registrationButton');
 const authElements = document.querySelectorAll('.auth-buttons');
