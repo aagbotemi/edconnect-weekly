@@ -1,4 +1,4 @@
-var user = null;
+/*var user = null;
 let url = window.location.href.split('/').pop();
 function programs() {
     let programDropdown = document.getElementById('Program');
@@ -275,6 +275,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         logOut();
     }
 });
+*/
 if (window.location.href.includes('register.html')) {
   // check if window.location. is on register page
 
