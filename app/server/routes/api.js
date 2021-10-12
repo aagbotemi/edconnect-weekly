@@ -52,8 +52,8 @@ const requireLogin = (req, res, next) => {
 
 api.post("/register", (req, res) => {
   const {
-    firstname,
-    lastname,
+    firstName,
+    lastName,
     email,
     password,
     matricNumber,
@@ -65,8 +65,8 @@ api.post("/register", (req, res) => {
 
   const user = new User(
     id(),
-    firstname,
-    lastname,
+    firstName,
+    lastName,
     email,
     password,
     matricNumber,
