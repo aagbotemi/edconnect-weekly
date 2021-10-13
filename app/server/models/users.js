@@ -1,10 +1,10 @@
 const DataModel = require('./data_model');
 
 class User {
-    constructor(id, firstname, lastname, email, password, matricNumber, program, graduationYear) {
+    constructor(id, firstName, lastName, email, password, matricNumber, program, graduationYear) {
         this.id = id;
-        this.firstname = firstname;
-        this.lastname = lastname;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.matricNumber = matricNumber;
@@ -13,7 +13,7 @@ class User {
     }
 
     getFullName() {
-        return `${this.firstname} ${this.lastname}`
+        return `${this.firstName} ${this.lastName}`
     }
 }
 

@@ -1,1 +1,74 @@
-{"data":[{"id":"qqg8jtk5iso","name":"edconnect","abstract":"hello this is an abstract","authors":["efe","john"],"tags":["e-learning"],"createdBy":"uqdecg701wb"}]}
+{ "data": [
+    {
+        "id":"qqg8jtk5iso",
+        "name":"edconnect",
+        "abstract":"hello this is an abstract",
+        "authors":["efe","john"],
+        "tags":["e-learning"],
+        "createdBy":"Edconnect"
+    },
+    {
+        "id":"723hhs82ms",
+        "name":"Abiodun Awoyemi",
+        "abstract":"I'm getting this",
+        "authors":["kate","joe","steve"],
+        "tags":["#react"," #lms"],
+        "createdBy":"Abbey"
+    },
+    {
+        "id":"js7ks778hs6",
+        "name":"Abiodun Gbotemi",
+        "abstract":"Programming is bae",
+        "authors":["dream","real","stall"],
+        "tags":["#vue"," #lms"],
+        "createdBy":"Gbhb"
+    },
+    {
+        "id":"758nfd5hd7h",
+        "name":"Gbotemi Awoyemi",
+        "abstract":"The breast of God",
+        "authors":["God","Yahweh","Nissi"],
+        "tags":["#life"," #immortal"],
+        "createdBy":"Immortality"
+    },
+    {
+        "id":"8geyn854vh5",
+        "name":"John Doe",
+        "abstract":"The Devil's Mosquito",
+        "authors":["Lucifer"],
+        "tags":["sin", "corruption"],
+        "createdBy":"Golgotha"
+    },
+    {
+        "id":"689mkkghvy6",
+        "name":"John Sally",
+        "abstract":"There is life",
+        "authors":["Fintech","Edtech"],
+        "tags":["tech","lms","money"],
+        "createdBy":"Wealth"
+    },
+    {
+        "id":"hgtrexf87oi",
+        "name":"AbdulRhaman Afaraetu",
+        "abstract":"lorem ipsum dolor amet",
+        "authors":["this","kind"],
+        "tags":["#dale"," #sihj","  #mount"],
+        "createdBy":"Kroabata"
+    },
+    {
+        "id":"8754hyui98d",
+        "name":"Mariam Opeyemi",
+        "abstract":"Star girl",
+        "authors":["Afolabi"],
+        "tags":["#star"," #girl","  #star"],
+        "createdBy":"Reactor"
+    },
+    {
+        "id":"je792m2hdj9",
+        "name":"Deji Ayodeji",
+        "abstract":"Don is don",
+        "authors":["Communication"],
+        "tags":["don", "tech"],
+        "createdBy":"Anybody"
+    }
+]}
