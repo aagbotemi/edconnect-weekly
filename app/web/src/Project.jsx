@@ -86,10 +86,11 @@ const Project = () => {
                                         <strong>Author(s)</strong>
                                         </div>
                                         <p id="project_authors" className="card-text py-2 px-3 text-align-center">
-                                        {projects.authors &&
+                                            {projects.authors}
+                                        {/* {projects.authors &&
                                             projects.authors.map (author => (
                                             <strong key={author}>{author}</strong>
-                                            ))}
+                                            ))} */}
                                         </p>
                                     </div>
                                     <div className="card">
