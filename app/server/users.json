@@ -78,5 +78,15 @@
         "matricNumber":"06/1241",
         "program":"Physics with Electronics",
         "graduationYear":"2016"
+    },
+    {
+        "id":"r3232ddads3",
+        "firstName":"Darey",
+        "lastName":"Art-Alade",
+        "email":"darey@gmail.com",
+        "password":"111111",
+        "matricNumber":"06/1242",
+        "program":"Mechatronics",
+        "graduationYear":"2017"
     }
 ]}

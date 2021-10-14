@@ -18,6 +18,7 @@ const Project = () => {
         })
             .then (response => response.json())
             .then (response => {
+                setProjects(response);
                 fetch (`/api/users/${response.createdBy}`, {
                     method: 'GET',
                     header: {
@@ -25,9 +26,10 @@ const Project = () => {
                     },
                 })
                     .then (response => response.json())
-                    .then(response => setUser(response));
+                    .then(response => {
+                        setUser(response.firstName + ' ' + response.lastName)
+                    });
                 
-                setProjects(response);
             });
     }, [id]);
 
@@ -37,15 +39,13 @@ const Project = () => {
                 {projects &&
                     <div>
                         <section name="project" className="container mt-4 mb-5">
+                            {user}
                             <h1 id="project_name">{projects.name}</h1>
                             <div className="row bg-light text-secondary">
                                 <div className="col p-3 d-flex align-items-center">
                                     <p>
                                         <strong>Created By: <br /></strong>
-                                        {user &&
-                                        <strong id="project_author">
-                                            {user.firstName} {user.lastName}
-                                        </strong>}
+                                        {user}
                                     </p>
                                 </div>
                                 <div className="col p-3 d-flex align-items-center">
@@ -86,11 +86,11 @@ const Project = () => {
                                         <strong>Author(s)</strong>
                                         </div>
                                         <p id="project_authors" className="card-text py-2 px-3 text-align-center">
-                                            {projects.authors}
-                                        {/* {projects.authors &&
+                                            {/* {projects.authors} */}
+                                        {projects.authors &&
                                             projects.authors.map (author => (
                                             <strong key={author}>{author}</strong>
-                                            ))} */}
+                                            ))}
                                         </p>
                                     </div>
                                     <div className="card">
