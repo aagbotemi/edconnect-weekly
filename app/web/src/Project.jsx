@@ -84,7 +84,7 @@ const Project = () => {
                                         <div className="card-header">
                                         <strong>Author(s)</strong>
                                         </div>
-                                        <p id="project_authors" className="card-text py-2 px-3 text-align-center">
+                                        <p id="project_author" className="card-text py-2 px-3 text-align-center">
                                             {/* {projects.authors} */}
                                         {projects.authors &&
                                             projects.authors.map (author => (
