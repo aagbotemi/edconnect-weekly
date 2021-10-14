@@ -96,7 +96,7 @@ const Project = () => {
                                         <div id="project_tags" className="card-header">
                                         {projects.tags &&
                                             projects.tags.map (tag => (
-                                            <strong style={{color: "#3aa"}} key={tag}> #{tag} </strong>
+                                            <strong style={{color: "#3aa"}} key={tag}>{tag} </strong>
                                             ))}
                                             {/* <strong style={{color: "blue"}}>
                                                 #{projects.tags &&
