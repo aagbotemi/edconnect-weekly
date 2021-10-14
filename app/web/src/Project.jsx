@@ -39,7 +39,6 @@ const Project = () => {
                 {projects &&
                     <div>
                         <section name="project" className="container mt-4 mb-5">
-                            {user}
                             <h1 id="project_name">{projects.name}</h1>
                             <div className="row bg-light text-secondary">
                                 <div className="col p-3 d-flex align-items-center">
@@ -89,7 +88,7 @@ const Project = () => {
                                             {/* {projects.authors} */}
                                         {projects.authors &&
                                             projects.authors.map (author => (
-                                            <strong key={author}>{author}</strong>
+                                            <strong key={author}>{author}<br /></strong>
                                             ))}
                                         </p>
                                     </div>
@@ -97,8 +96,12 @@ const Project = () => {
                                         <div id="project_tags" className="card-header">
                                         {projects.tags &&
                                             projects.tags.map (tag => (
-                                            <strong key={tag}>{tag}</strong>
+                                            <strong style={{color: "#3aa"}} key={tag}> #{tag} </strong>
                                             ))}
+                                            {/* <strong style={{color: "blue"}}>
+                                                #{projects.tags &&
+                                            projects.tags.join(", ")}
+                                            </strong> */}
                                         </div>
                                     </div>
                                     <div className="card">
