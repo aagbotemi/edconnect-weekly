@@ -41,7 +41,7 @@ const Project = () => {
                         <section name="project" className="container mt-4 mb-5">
                             <h1 id="project_name">{projects.name}</h1>
                             <div className="row bg-light text-secondary">
-                                <div className="col p-3 d-flex align-items-center">
+                                <div id="project_author" className="col p-3 d-flex align-items-center">
                                     <p>
                                         <strong>Created By: <br /></strong>
                                         {user}
@@ -84,7 +84,7 @@ const Project = () => {
                                         <div className="card-header">
                                         <strong>Author(s)</strong>
                                         </div>
-                                        <p id="project_author" className="card-text py-2 px-3 text-align-center">
+                                        <p id="project_authors" className="card-text py-2 px-3 text-align-center">
                                             {/* {projects.authors} */}
                                         {projects.authors &&
                                             projects.authors.map (author => (
