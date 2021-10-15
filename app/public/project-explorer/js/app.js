@@ -44,7 +44,7 @@ function registerPost() {
     const data = {};
     let regBtn = document.getElementById('registrationButton');
     regBtn.addEventListener("click", function (event) {
-        data['firstName'] = document.getElementById('firstName').value;
+        data['firstname'] = document.getElementById('firstname').value;
         data['lastName'] = document.getElementById('LastName').value;
         data['email'] = document.getElementById('Email').value;
         data['password'] = document.getElementById('passWord').value;
@@ -208,7 +208,7 @@ function projectView() {
                     .then(response => response.json())
                     .then(data2 => {
                         projectAuthor = document.getElementById('project_author');
-                        projectAuthor.innerHTML = 'Created By' + '<br>' + data2.firstName + ' ' + data2.lastName;
+                        projectAuthor.innerHTML = 'Created By' + '<br>' + data2.firstname + ' ' + data2.lastName;
                     })
             }
         })
@@ -236,7 +236,7 @@ function showLoggedInUser() {
     let authElements = document.querySelectorAll('.auth-buttons');
     if (user) {
         authElements[1].classList.toggle('hidden')
-        document.getElementById("username").textContent = 'Hi ' + user.firstName;
+        document.getElementById("username").textContent = 'Hi ' + user.firstname;
     } else {
         authElements[0].classList.toggle('hidden')
     }
@@ -326,8 +326,8 @@ if (window.location.href.includes('register.html')) {
     event.preventDefault()
 
     let regInfo = {
-      firstName: document.getElementById('firstName').value,
-      lastName: document.getElementById('lastName').value,
+      firstname: document.getElementById('firstname').value,
+      lastname: document.getElementById('lastname').value,
       email: document.getElementById('email').value,
       password: document.getElementById('password').value,
       matricNumber: document.getElementById('matricNumber').value,
@@ -387,7 +387,7 @@ if (document.cookie) {
   })
     .then((result) => result.json())
     .then((userDetails) => {
-      let newDisplay = `<li class="nav-item"><a class="nav-link" id ="logout">Logout</a></li><li class="nav-item"><a class="nav-link" id ="username">Hi, ${userDetails.firstName}</a></li>`
+      let newDisplay = `<li class="nav-item"><a class="nav-link" id ="logout">Logout</a></li><li class="nav-item"><a class="nav-link" id ="username">Hi, ${userDetails.firstname}</a></li>`
       newNav.innerHTML = newDisplay
 
       // handle log out of user
@@ -622,7 +622,7 @@ if (window.location.href.includes('viewproject.html')) {
         .then((response) => {
           document.getElementById(
             'project_author',
-          ).innerHTML = ` <strong>Created by: <br> ${response.firstName} ${response.lastName} </strong>`
+          ).innerHTML = ` <strong>Created by: <br> ${response.firstname} ${response.lastname} </strong>`
         })
         .catch((e) => console.log(e))
     })

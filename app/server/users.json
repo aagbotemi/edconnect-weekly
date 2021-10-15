@@ -1,8 +1,8 @@
 {"data":[
     {
         "id":"uqdecg701wb",
-        "firstName":"efe",
-        "lastName":"amad",
+        "firstname":"efe",
+        "lastname":"amad",
         "email":"efe@gmail.com",
         "password":"passME123",
         "matricNumber":"06/1234",
@@ -11,8 +11,8 @@
     },
     {
         "id":"hghbhsj83j3",
-        "firstName":"Abiodun",
-        "lastName":"Awoyemi",
+        "firstname":"Abiodun",
+        "lastname":"Awoyemi",
         "email":"abiodun@gmail.com",
         "password":"1111111",
         "matricNumber":"06/1235",
@@ -21,8 +21,8 @@
     },
     {
         "id":"jkdnkj321df",
-        "firstName":"Esther",
-        "lastName":"Oguntade",
+        "firstname":"Esther",
+        "lastname":"Oguntade",
         "email":"esther@gmail.com",
         "password":"111111",
         "matricNumber":"06/1236",
@@ -31,8 +31,8 @@
     },
     {
         "id":"77988921jkjd",
-        "firstName":"Tosin",
-        "lastName":"Olukoya",
+        "firstname":"Tosin",
+        "lastname":"Olukoya",
         "email":"tosin@gmail.com",
         "password":"1111111",
         "matricNumber":"06/1237",
@@ -41,8 +41,8 @@
     },
     {
         "id":"7867gb54ssd",
-        "firstName":"Oriyomi",
-        "lastName":"Solanke",
+        "firstname":"Oriyomi",
+        "lastname":"Solanke",
         "email":"oriyomi@gmail.com",
         "password":"1111111",
         "matricNumber":"06/1238",
@@ -51,8 +51,8 @@
     },
     {
         "id":"jdhlo7687sg",
-        "firstName":"Israel",
-        "lastName":"Awoyemi",
+        "firstname":"Israel",
+        "lastname":"Awoyemi",
         "email":"israel@gmail.com",
         "password":"111111",
         "matricNumber":"06/1239",
@@ -61,8 +61,8 @@
     },
     {
         "id":"jui786gts45",
-        "firstName":"Esther",
-        "lastName":"Mercy",
+        "firstname":"Esther",
+        "lastname":"Mercy",
         "email":"esther@gmail.com",
         "password":"111111",
         "matricNumber":"06/1240",
@@ -71,8 +71,8 @@
     },
     {
         "id":"785hjkk543f",
-        "firstName":"Dare",
-        "lastName":"Awotunde",
+        "firstname":"Dare",
+        "lastname":"Awotunde",
         "email":"dare@gmail.com",
         "password":"111111",
         "matricNumber":"06/1241",
@@ -81,8 +81,8 @@
     },
     {
         "id":"r3232ddads3",
-        "firstName":"Darey",
-        "lastName":"Art-Alade",
+        "firstname":"Darey",
+        "lastname":"Art-Alade",
         "email":"darey@gmail.com",
         "password":"111111",
         "matricNumber":"06/1242",

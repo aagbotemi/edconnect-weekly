@@ -8,8 +8,8 @@ const Signup = () => {
     const [programs, setPrograms] = useState ([]);
     const [graduationYears, setGraduationYears] = useState ([]);
     const [regInfo, setRegInfo] = useState ({
-        firstName: '',
-        lastName: '',
+        firstname: '',
+        lastname: '',
         email: '',
         password: '',
         matricNumber: '',
@@ -70,8 +70,8 @@ const Signup = () => {
     };
 
     const {
-        firstName,
-        lastName,
+        firstname,
+        lastname,
         email,
         password,
         matricNumber,
@@ -114,9 +114,9 @@ const Signup = () => {
                         <Form.Control
                         type="text"
                         placeholder="Your First Name"
-                        name="firstName"
+                        name="firstname"
                         id="yourFirstName"
-                        value={firstName}
+                        value={firstname}
                         onChange={handleChange}
                         />
                     </Form.Group>
@@ -127,9 +127,9 @@ const Signup = () => {
                         <Form.Control
                         type="text"
                         placeholder="Your Last Name"
-                        name="lastName"
+                        name="lastname"
                         id="yourLastName"
-                        value={lastName}
+                        value={lastname}
                         onChange={handleChange}
                         />
                     </Form.Group>

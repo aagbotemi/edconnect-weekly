@@ -67,7 +67,7 @@ const Header = () => {
                         <Nav.Link
                             id="username"
                             href={`/projects/${state.id}`}
-                        >{`Hi, ${state.firstName}`}</Nav.Link>
+                        >{`Hi, ${state.firstname}`}</Nav.Link>
                     : <Nav.Link href="/login">{login}</Nav.Link>
                 }
             </Nav>
