@@ -1,99 +1,12 @@
-import React, {useState, useEffect} from 'react';
-// import {useHistory} from 'react-router-dom';
+import React, { useState } from 'react'
 import {Form, Row, Col, Button} from 'react-bootstrap';
 import Layout from './shared/Layout';
-// import Cookies from 'universal-cookie';
 
-const Signup = () => {
-    const [programs, setPrograms] = useState ([]);
-    const [graduationYears, setGraduationYears] = useState ([]);
-    const [regInfo, setRegInfo] = useState ({
-        firstname: '',
-        lastname: '',
-        email: '',
-        password: '',
-        matricNumber: '',
-        program: '',
-        graduationYear: '',
-    });
-    const [error, setError] = useState('');
-    
-    useEffect(() => {
-        fetch ('/api/programs', {
-            method: 'GET',
-            header: {
-                'Content-Type': 'application/json; charset=UTF-8',
-            },
-        })
-        .then(response => response.json())
-        .then(response => setPrograms(response));
-    }, []);
-    
-    useEffect(() => {
-        fetch ('/api/graduationYears', {
-            method: 'GET',
-            header: {
-                'Content-Type': 'application/json; charset=UTF-8',
-            },
-        })
-        .then(response => response.json())
-        .then(response => setGraduationYears(response));
-    }, []);
-
-    let history = useHistory ();
-    const signup = e => {
-        e.preventDefault ();
-        fetch ('/api/register', {
-            method: 'POST',
-            body: JSON.stringify(regInfo),
-            headers: {
-                'Content-Type': 'application/json; charset=UTF-8',
-            },
-        })
-        .then (response => response.json())
-        .then (res => {
-            console.log (res);
-            if (res.status === 'ok') {
-                document.cookie = `uid=${res.data.id}; path=/`; // store the id in a cookie named uid.
-                    // const userCookie = new Cookies()
-                    // const userId = res.data.id;
-                    // const key = 'uid';
-                    // const value = encodeURIComponent(userId);
-                    // userCookie.set(key, value, {path: '/'});
-                history.push ('/');
-                // setError ('');
-            } else if (res.status !== 'ok') {
-                // step 4 [3d]
-                setError (res.errors);
-            }
-        });
-    };
-
-    const {
-        firstname,
-        lastname,
-        email,
-        password,
-        matricNumber,
-        program,
-        graduationYear,
-    } = regInfo;
-
-    const handleChange = e => {
-        const {name, value} = e.target;
-        setRegInfo ({...regInfo, [name]: value});
-    };
-
-    useEffect (() => {
-        const errorTimer = setTimeout (() => {
-            setError ('');
-        }, 3000);
-        return () => clearTimeout(errorTimer);
-    }, [error]);
+const Signup = ({ school, gradYears, error, user}) => {
 
     return (
         <Layout>
-            <Form id="signupForm">
+            <Form method="POST" action="signup" id="signupForm">
                 <div id="containerlogin">
                     <h1>Sign Up</h1>
                     {error
@@ -129,8 +42,6 @@ const Signup = () => {
                         placeholder="Your Last Name"
                         name="lastname"
                         id="yourLastName"
-                        value={lastname}
-                        onChange={handleChange}
                         />
                     </Form.Group>
                     </Col>
@@ -144,8 +55,6 @@ const Signup = () => {
                         placeholder="Your Email Address"
                         name="email"
                         id="yourEmailAddress"
-                        value={email}
-                        onChange={handleChange}
                         />
                     </Form.Group>
                     </Col>
@@ -157,11 +66,9 @@ const Signup = () => {
                         as="select"
                         id={'language'}
                         name="program"
-                        value={program}
-                        onChange={handleChange}
                         >
-                        {programs &&
-                            programs.map ((value, index) => (
+                        {school &&
+                            school.map ((value, index) => (
                             <option key={index}>{value}</option>
                             ))}
                         </Form.Control>
@@ -175,13 +82,11 @@ const Signup = () => {
                         <Form.Control
                         as="select"
                         name="graduationYear"
-                        value={graduationYear}
                         id="graduationYear"
                         className="form-control"
-                        onChange={handleChange}
                         >
-                        {graduationYears &&
-                            graduationYears.map((value, index) => (
+                        {gradYears &&
+                            gradYears.map((value, index) => (
                             <option key={index}>{value}</option>
                             ))}
                         </Form.Control>
@@ -194,8 +99,6 @@ const Signup = () => {
 
                         <Form.Control
                         name="password"
-                        value={password}
-                        onChange={handleChange}
                         type="password"
                         placeholder="Your Password"
                         id="password"
@@ -210,10 +113,8 @@ const Signup = () => {
 
                         <Form.Control
                         name="matricNumber"
-                        value={matricNumber}
                         placeholder="e.g 10/2020"
                         className="form-control"
-                        onChange={handleChange}
                         type="text"
                         id="matricNumber"
                         />

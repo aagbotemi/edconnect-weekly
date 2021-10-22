@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {useHistory} from 'react-router-dom';
+// import {useHistory} from 'react-router-dom';
 import {Form, Button} from 'react-bootstrap';
 import Layout from './shared/Layout';
 
@@ -53,7 +53,7 @@ const Login = () => {
     return (
         <Layout>
             <div className="mx-auto w-75">
-                <Form id="loginForm" onSubmit={LoginForm}>
+                <Form id="loginForm" method="post" action="login">
                     <h1>Login</h1>
                     {invalid
                         ? <div id="alert" className="alert alert-danger">{invalid}</div>

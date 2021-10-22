@@ -1,25 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Container, Row, Jumbotron} from 'react-bootstrap';
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Layout from './shared/Layout';
-// import {Link} from 'react-router-dom';
-const Home = () => {
-    const [state, setState] = useState([]);
+
+const Home = (props) => {
     
-    useEffect (() => {
-        fetch ('/api/projects', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json; charset=UTF-8',
-            },
-        })
-        .then (response => response.json())
-        .then (response => setState(response));
-    }, []);
 
     return (
-        <Layout>
+        <Layout user={props.user}>
             <Jumbotron>
                 <h1>Welcome to Project Explorer</h1>
                 <p>
@@ -38,37 +26,39 @@ const Home = () => {
             </Jumbotron>
             <Container>
                 <Row className="showcase">
-                    {state &&
-                        state.slice(0, 4).map((project, index) => {
+                    {props.project &&
+                        props.project.reverse().slice(0, 4).map((project, index) => {
                             return (
-                                <div className="col-3" key={index}>
-                                    <div className="card">
-                                        <div className="card-body">
-                                            <h5 className="card-title">
-                                                <Link to={`/projects/${project.id}`}>
+                                <Col className="col-3" key={index}>
+                                    <Card>
+                                        <Card.Body>
+                                            <Card.Title>
+                                                <a href={`/projects/${project.id}`}>
                                                     {project.name}
-                                                </Link>
+                                                </a>
                                                 {' '}
-                                            </h5>
-                                            <div>
-                                                {project.authors.map(author => (
+                                            </Card.Title>
+                                            <Card.Subtitle>
+                                                {project.authors}
+                                                {/* {project.authors.map(author => (
                                                     <h6
                                                         className="card-subtitle mb-2 text-muted"
                                                         key={author}
                                                     >
                                                         {author}
                                                     </h6>
-                                                ))}
-                                            </div>
-                                            <p className="card-text">
+                                                ))} */}
+                                            </Card.Subtitle>
+                                            <Card.Text>
                                                 {project.abstract}
-                                            </p>
-                                            <div>
-                                                {project.tags.map(tag => <span key={tag}>{tag}</span>)}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                            </Card.Text>
+                                            <Card.Footer>
+                                                {/* {project.tags.map(tag => <span key={tag}>{tag}</span>)} */}
+                                                {project.tags}
+                                            </Card.Footer>
+                                        </Card.Body>
+                                    </Card>
+                                </Col>
                             );
                         })
                     }
