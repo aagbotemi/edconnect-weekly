@@ -8,12 +8,13 @@ router.get('/signup', (req, res) => {
   // add code to render the Signup Component, and pass in the programs and gradyears as props
   const error = req.flash("error");
   res.render('Signup', { 
-    school: school.getPrograms(), 
-    gradYears: school.getGradYears(),
-    error: error,
+    props1: school.getPrograms(), 
+    props2: school.getGradYears(),
+    props3: error,
     user: req.session.user
   });
 });
+
 
 router.post('/signup', (req, res) => {
   let regInfo = {
@@ -35,6 +36,7 @@ router.post('/signup', (req, res) => {
     res.redirect(303, '/signup');
   }
 });
+
 
 router.get('/login', (req, res) => {
   // add code to render the Login Component

@@ -1,7 +1,6 @@
 const express = require('express');
-const projects = require('../services/project');
 const router = express.Router();
-
+const projects = require('../services/project');
 
 router.get('/', (req, res) => {
   // add code to render the Home Component, and pass in the projects as a props
@@ -11,9 +10,8 @@ router.get('/', (req, res) => {
 });
 
 router.get('/logout', (req, res) => {
-    req.session.destroy()
-    res.redirect('/')
+  req.session.destroy();
+  res.redirect('/')
 })
-
 
 module.exports = router;

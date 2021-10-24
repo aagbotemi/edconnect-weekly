@@ -3,6 +3,7 @@ const router = express.Router();
 const project = require('../services/project');
 const user = require('../services/user');
 
+
 router.get('/projects/submit', (req, res) => {
   // add code to render the CreateProject Component
   const error = req.flash("error");
@@ -28,11 +29,13 @@ router.post('/projects/submit', (req, res) => {
   }
 });
 
+
 router.get('/project/:id', (req, res) => {
   // add code to render the CreateProject Component
   const params = req.params.id;
   const userParams = project.getById(params);
   res.render('Project', { props1: userParams, props2: user.getById(userParams.createdBy), user: req.session.user });
 });
+
 
 module.exports = router;

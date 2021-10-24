@@ -1,35 +1,46 @@
-import React, {useState, useEffect} from 'react';
-import {Nav, Navbar, Form, FormControl, Button} from 'react-bootstrap';
-import {useHistory} from 'react-router';
+
+
+import React from 'react';
+import {Button, Form, FormControl, FormLabel, Nav, Navbar} from 'react-bootstrap';
 
 const Header = (props) => {
-    // const [state, setState] = useState ('');
-    // const [login] = useState('Login');
-    // const history = useHistory ();
 
-    // const logout = e => {
-    //     e.preventDefault ();
-    //     document.cookie = `uid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-    //     history.push ('/');
-    //     setState ('');
-    // };
+    return (
+        <Navbar bg="primary" expand="lg" variant="dark full">
+            <Navbar.Brand href="/">Project Explorer</Navbar.Brand>
+            <Navbar.Collapse>
+                <Form inline name="searchForm">
+                    <FormLabel className="sr-only">Search Projects:</FormLabel>
+                    <FormControl type="text" name="searchForm" placeholder="Search Projects" />
+                    <Button variant="outline-light" type="submit">Search</Button>
+                </Form>
+                <Nav className="mr-auto">
+                    <Nav.Link href="/projects/submit">Projects</Nav.Link>
+                </Nav>
 
-    // useEffect (() => {
-    //     if (document.cookie) {
-    //         let cookieValue = document.cookie.split('=');
-    //         const uid = cookieValue[1];
+                <Nav className="ml-auto">
+                    {props.user ? 
+                        (<>
+                        <Nav.Link href="/logout" id="logout">Logout</Nav.Link>
+                        <Navbar.Text id="username">{`Hi ${props.user.firstname}`}</Navbar.Text>
+                        </>) : (<>
+                        <Nav.Link href="/signup" id="signup">Sign Up</Nav.Link>
+                        <Nav.Link href="/login" id="login">Login</Nav.Link>
+                        </>)}
+                </Nav>
+            </Navbar.Collapse>
+        </Navbar>
+    )
+}
 
-    //         fetch (`/api/users/${uid}`, {
-    //             method: 'GET',
-    //             header: {
-    //                 'Content-Type': 'application/json; charset=UTF-8',
-    //             },
-    //         })
-    //             .then (result => result.json())
-    //             .then (res => setState(res));
-    //     }
-    // }, []);
+export default Header;
 
+
+/*
+import React, {useState, useEffect} from 'react';
+import {Nav, Navbar, Form, FormControl, Button} from 'react-bootstrap';
+
+const Header = (props) => {
     return (
         <Navbar
             id="header"
@@ -50,9 +61,8 @@ const Header = (props) => {
 
                     {/* <Nav.Link href={state ? '/projects/submit' : '/login'}>
                         Submit
-                    </Nav.Link> */}
+                    </Nav.Link> *!/}
                 </Nav>
-                {/* <Nav className="d-flex justify-content-end"> */}
                 <Nav className="mr-auto">
                     {props.user ? 
                         (<>
@@ -78,10 +88,11 @@ const Header = (props) => {
                                 href={`/projects/${state.id}`}
                             >{`Hi, ${state.firstname}`}</Nav.Link>
                         : <Nav.Link href="/login">{login}</Nav.Link>
-                    } */}
+                    } *!/}
                 </Nav>
-            <Navbar.Collapse>
+            </Navbar.Collapse>
         </Navbar>
     );
 };
 export default Header;
+*/
