@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import {Button, Form, FormControl, FormLabel, Nav, Navbar} from 'react-bootstrap';
 
