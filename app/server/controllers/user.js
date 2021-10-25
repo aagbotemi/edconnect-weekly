@@ -28,7 +28,7 @@ router.post('/signup', (req, res) => {
   }
   const results = user.create(regInfo);
   if (results[0] === true) {
-    req.session.user = regInfo;
+    req.session.user = regInfo[1];
     res.redirect('/');
   } else {
     const error = results[1];
