@@ -15,12 +15,12 @@ const Signup = ({ props1, props2, props3, user }) => {
                   </Alert>)}
                 <Form.Group as={Row}>
                     <Col>
-                        <Form.Label for="firstName">First Name:</Form.Label>
-                        <Form.Control type="text" id="firstname" name="firstName" placeholder="First Name" />
+                        <Form.Label for="firstname">First Name:</Form.Label>
+                        <Form.Control type="text" id="firstname" name="firstname" placeholder="First Name" />
                     </Col>
                     <Col>
-                        <Form.Label for="lastName">Last Name:</Form.Label>
-                        <Form.Control type="text" id ="lastname" name="lastName" placeholder="Last Name" />
+                        <Form.Label for="lastname">Last Name:</Form.Label>
+                        <Form.Control type="text" id ="lastname" name="lastname" placeholder="Last Name" />
                     </Col>
                 </Form.Group>
                 <Form.Group as={Row}>
@@ -92,7 +92,7 @@ const Signup = ({ school, gradYears, error, user}) => {
                         type="text"
                         placeholder="Your First Name"
                         name="firstname"
-                        id="yourFirstName"
+                        id="yourfirstname"
                         value={firstname}
                         onChange={handleChange}
                         />
@@ -105,7 +105,7 @@ const Signup = ({ school, gradYears, error, user}) => {
                         type="text"
                         placeholder="Your Last Name"
                         name="lastname"
-                        id="yourLastName"
+                        id="yourlastname"
                         />
                     </Form.Group>
                     </Col>

@@ -45,7 +45,7 @@ function registerPost() {
     let regBtn = document.getElementById('registrationButton');
     regBtn.addEventListener("click", function (event) {
         data['firstname'] = document.getElementById('firstname').value;
-        data['lastName'] = document.getElementById('LastName').value;
+        data['lastname'] = document.getElementById('lastname').value;
         data['email'] = document.getElementById('Email').value;
         data['password'] = document.getElementById('passWord').value;
         data['matricNumber'] = document.getElementById('MatricNumber').value;
@@ -208,7 +208,7 @@ function projectView() {
                     .then(response => response.json())
                     .then(data2 => {
                         projectAuthor = document.getElementById('project_author');
-                        projectAuthor.innerHTML = 'Created By' + '<br>' + data2.firstname + ' ' + data2.lastName;
+                        projectAuthor.innerHTML = 'Created By' + '<br>' + data2.firstname + ' ' + data2.lastname;
                     })
             }
         })

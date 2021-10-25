@@ -27,7 +27,7 @@
 //                 })
 //                     .then (response => response.json())
 //                     .then(response => {
-//                         setUser(response.firstName + ' ' + response.lastName)
+//                         setUser(response.firstname + ' ' + response.lastname)
 //                     });
                 
 //             });

@@ -18,8 +18,8 @@ router.get('/signup', (req, res) => {
 
 router.post('/signup', (req, res) => {
   let regInfo = {
-    firstname :  req.body.firstName,
-    lastname : req.body.lastName,
+    firstname :  req.body.firstname,
+    lastname : req.body.lastname,
     email : req.body.email,
     password : req.body.password,
     matricNumber : req.body.matricNumber,
