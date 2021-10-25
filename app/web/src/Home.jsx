@@ -1,81 +1,47 @@
-import React, {useEffect, useState} from 'react';
-import {Button, Container, Row, Jumbotron} from 'react-bootstrap';
-
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React from 'react';
+import {useState, useEffect} from 'react';
+import { Jumbotron, Button, Container, Row, Col, Card } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import Layout from './shared/Layout';
-// import {Link} from 'react-router-dom';
-const Home = () => {
-    const [state, setState] = useState([]);
-    
-    useEffect (() => {
-        fetch ('/api/projects', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json; charset=UTF-8',
-            },
-        })
-        .then (response => response.json())
-        .then (response => setState(response));
-    }, []);
 
+const Home = (props) => {
+    const [projects, setProjects] = useState([]);
+    useEffect(() => {
+        fetch("api/projects")
+          .then(res => res.json())
+          .then(
+            (result) => {
+              setProjects(result.slice(0,4));
+            }
+          )
+      }, [])
     return (
         <Layout>
-            <Jumbotron>
-                <h1>Welcome to Project Explorer</h1>
-                <p>
-                Project Explorer is a repository for filan year projects across all
-                departments at your institution. you can submit oyur project and
-                search projects submited by others to learn from.
-                </p>
-                <div>
-                    <Button href="/signup" variant="primary" className="mr-4">
-                        Get Started
-                    </Button>
-                    <Button href="/login" variant="secondary">
-                        Login
-                    </Button>
-                </div>
-            </Jumbotron>
-            <Container>
-                <Row className="showcase">
-                    {state &&
-                        state.slice(0, 4).map((project, index) => {
-                            return (
-                                <div className="col-3" key={index}>
-                                    <div className="card">
-                                        <div className="card-body">
-                                            <h5 className="card-title">
-                                                <Link to={`/projects/${project.id}`}>
-                                                    {project.name}
-                                                </Link>
-                                                {' '}
-                                            </h5>
-                                            <div>
-                                                {project.authors.map(author => (
-                                                    <h6
-                                                        className="card-subtitle mb-2 text-muted"
-                                                        key={author}
-                                                    >
-                                                        {author}
-                                                    </h6>
-                                                ))}
-                                            </div>
-                                            <p className="card-text">
-                                                {project.abstract}
-                                            </p>
-                                            <div>
-                                                {project.tags.map(tag => <span key={tag}>{tag}</span>)}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            );
-                        })
-                    }
-                </Row>
-            </Container>
+            <main className="mx-auto">
+                <Jumbotron>
+                    <h1>Project Explorer</h1>
+                    <p>Project Explorer is a repository for final year projects across all departments at your institution. You can submit your project and search projects submitted by others to learn from.</p>
+                    <Button variant="primary" href="/signup" className="mr-2">Get Started</Button>
+                    <Button variant="secondary" href="/login">Login</Button>
+                </Jumbotron>
+
+                <Container>
+                    <Row className="showcase justify-content-between">
+                        {projects.map(project => <Col>
+                            <Card>
+                                <Card.Body>
+                                    <Card.Title><Link to={`/projects/${project.id}`}>{project.name}</Link></Card.Title>
+                                    <Card.Subtitle>{project.authors}</Card.Subtitle>
+                                    <Card.Text>{project.abstract}</Card.Text>
+                                    <Card.Footer>{project.tags}</Card.Footer>
+                                </Card.Body>
+                            </Card>
+                        </Col>)}
+                    </Row>
+                </Container><br/><br/>
+            </main>
         </Layout>
-    );
-};
+    )
+}
 
 export default Home;

@@ -1,262 +1,113 @@
-// import React, {useState, useEffect} from 'react';
-// import {useParams} from 'react-router';
-// import {Link} from 'react-router-dom';
-// import Layout from './shared/Layout';
-
-// const Project = () => {
-//     const [projects, setProjects] = useState([]);
-//     const [user, setUser] = useState('');
-
-//     const {id} = useParams();
-
-//     useEffect (() => {
-//         fetch (`/api/projects/${id}`, {
-//             method: 'GET',
-//             header: {
-//                 'Content-Type': 'application/json; charset=UTF-8',
-//             },
-//         })
-//             .then (response => response.json())
-//             .then (response => {
-//                 setProjects(response);
-//                 fetch (`/api/users/${response.createdBy}`, {
-//                     method: 'GET',
-//                     header: {
-//                         'Content-Type': 'application/json; charset=UTF-8',
-//                     },
-//                 })
-//                     .then (response => response.json())
-//                     .then(response => {
-//                         setUser(response.firstname + ' ' + response.lastname)
-//                     });
-                
-//             });
-//     }, [id]);
-
-//     return (
-//         <Layout>
-//             <div>
-//                 {projects &&
-//                     <div>
-//                         <section name="project" className="container mt-4 mb-5">
-//                             <h1 id="project_name">{projects.name}</h1>
-//                             <div className="row bg-light text-secondary">
-//                                 <div id="project_author" className="col p-3 d-flex align-items-center">
-//                                     <p>
-//                                         <strong>Created By: <br /></strong>
-//                                         {user}
-//                                     </p>
-//                                 </div>
-//                                 <div className="col p-3 d-flex align-items-center">
-//                                     <p><strong>Date Created: <br /> 2020/08/30</strong></p>
-//                                 </div>
-//                                 <div className="col p-3 d-flex align-items-center">
-//                                     <p><strong>Last Updated: <br /> 2020/08/30</strong></p>
-//                                 </div>
-//                                 <div className="col p-3 d-flex align-items-center justify-content-end">
-//                                     <Link to="/l" className="btn btn-primary" type="viewProject">
-//                                         Edit Project
-//                                     </Link>
-//                                 </div>
-//                             </div>
-//                             <div className="row mt-5">
-//                                 <div className="col-6">
-//                                     <h5>Project Abstract</h5>
-//                                     <hr />
-//                                     <p id="project_abstract">{projects.abstract}</p>
-//                                     <div className="form-group">
-//                                         <label htmlFor="comments">Comments</label>
-//                                         <textarea
-//                                         className="form-control"
-//                                         placeholder="Leave a comment"
-//                                         name="comments"
-//                                         />
-//                                     </div>
-//                                     <button className="btn btn-primary">Submit</button>
-//                                     <hr />
-//                                     <p className="text-center d-flex align-items-center justify-content-center py-2">
-//                                         No comments added yet
-//                                     </p>
-//                                 </div>
-//                                 <div className="col-6">
-//                                     <h5>Project Details</h5>
-//                                     <div className="card">
-//                                         <div className="card-header">
-//                                         <strong>Author(s)</strong>
-//                                         </div>
-//                                         <p id="project_authors" className="card-text py-2 px-3 text-align-center">
-//                                             {/* {projects.authors} */}
-//                                         {projects.authors &&
-//                                             projects.authors.map (author => (
-//                                             <strong key={author}>{author}<br /></strong>
-//                                             ))}
-//                                         </p>
-//                                     </div>
-//                                     <div className="card">
-//                                         <div id="project_tags" className="card-header">
-//                                         {projects.tags &&
-//                                             projects.tags.map (tag => (
-//                                             <strong style={{color: "#3aa"}} key={tag}>{tag} </strong>
-//                                             ))}
-//                                             {/* <strong style={{color: "blue"}}>
-//                                                 #{projects.tags &&
-//                                             projects.tags.join(", ")}
-//                                             </strong> */}
-//                                         </div>
-//                                     </div>
-//                                     <div className="card">
-//                                         <div className="card-header">
-//                                             <strong>Project Files</strong>
-//                                         </div>
-//                                         <p className="card-text d-flex align-items-center justify-content-center p-3 ">
-//                                             No files uploaded yet
-//                                         </p>
-//                                     </div>
-//                                 </div>
-//                             </div>
-//                         </section>
-//                     </div>
-//                 }
-//             </div>
-//         </Layout>
-//     );
-// };
-
-// export default Project;
-
-import React, {useState, useEffect} from 'react';
-import {useParams} from 'react-router';
-import {Link} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Button, Card, Col, Container, Form, InputGroup, Row } from 'react-bootstrap';
+import { useParams } from 'react-router-dom';
 import Layout from './shared/Layout';
-// import {Card}
 
-const Project = () => {
-  const [projects, setprojects] = useState ([]);
-  const [user, setuser] = useState ('');
+const Project = (props) => {
+    const { id } = useParams();
+    const [projectName, setProjectName] = useState('');
+    const [abstract, setAbstract] = useState('');
+    const [authors, setAuthors] = useState('');
+    const [tags, setTags] = useState('');
+    const [author, setAuthor] = useState('');
 
-  // const queryString = window.location.search; // retrive the website link
-  const {id} = useParams ();
+    useEffect(() => {
+        fetch(`/api/projects/${id}`)
+          .then(res => res.json())
+          .then((result) => {
+              console.log(result)
+              setProjectName(result.name);
+              setAbstract(result.abstract);
+              setAuthors(result.authors);
+              setTags(result.tags);
+            
+                fetch(`/api/users/${result.createdBy}`)
+                    .then(res => res.json())
+                    .then((res) => {
+                        setAuthor(res.firstname + ' ' + res.lastname);
+                    }
+                    )
+        }
+        )
+    }, id)
 
-  useEffect (
-    () => {
-      fetch (`/api/projects/${id}`, {
-        method: 'GET',
-        header: {
-          'Content-Type': 'application/json',
-        },
-      })
-        .then (response => response.json ())
-        .then (response => {
-          fetch (`/api/users/${response.createdBy}`, {
-            method: 'GET',
-            header: {
-              'Content-Type': 'application/json',
-            },
-          })
-            .then (response => response.json ())
-            .then (response => setuser (response));
-          setprojects (response);
-        });
-    },
-    [id]
-  );
-
-  return (
-    <Layout>
-      <div>
-        {projects &&
-          <div>
-            <section name="project" className="container mt-4 mb-5">
-
-              <h1 id="project_name">
-
-                {projects.name}
-              </h1>
-              <div className="row bg-light text-secondary">
-                <div className="col p-3 d-flex align-items-center">
-                  <p>
-                    <strong>
-                      Created By: <br />
-                    </strong>
-
-                    {user &&
-                      <strong id="project_author">
-                        {user.firstname} {user.lastname}
-                      </strong>}
-                  </p>
-                </div>
-                <div className="col p-3 d-flex align-items-center">
-                  <p><strong>Date Created: <br /> 2020/08/30</strong></p>
-                </div>
-                <div className="col p-3 d-flex align-items-center">
-                  <p><strong>Last Updated: <br /> 2020/08/30</strong></p>
-                </div>
-                <div className="col p-3 d-flex align-items-center justify-content-end">
-                  <Link to="/l" className="btn btn-primary" type="viewProject">
-                    Edit Project
-                  </Link>
-                </div>
-              </div>
-              <div className="row mt-5">
-                <div className="col-6">
-                  <h5>Project Abstract</h5>
-                  <hr />
-                  <p id="project_abstract">{projects.abstract}</p>
-                  <div className="form-group">
-                    <label htmlFor="comments">Comments</label>
-                    <textarea
-                      className="form-control"
-                      placeholder="Leave a comment"
-                      name="comments"
-                    />
-                  </div>
-                  <button className="btn btn-primary">Submit</button>
-                  <hr />
-                  <p className="text-center d-flex align-items-center justify-content-center py-2">
-                    No comments added yet
-                  </p>
-                </div>
-                <div className="col-6">
-                  <h5>Project Details</h5>
-                  <div className="card">
-                    <div className="card-header">
-                      <strong>Author(s)</strong>
-                    </div>
-                    <p
-                      id="project_authors"
-                      className="card-text py-2 px-3 text-align-center"
-                    >
-                      {projects.authors &&
-                        projects.authors.map (author => (
-                          <strong key={author}>{author}</strong>
-                        ))}
-
-                    </p>
-                  </div>
-                  <div className="card">
-                    <div id="project_tags" className="card-header">
-                      {projects.tags &&
-                        projects.tags.map (tag => (
-                          <strong key={tag}>{tag}</strong>
-                        ))}
-                    </div>
-                  </div>
-                  <div className="card">
-                    <div className="card-header">
-                      <strong>Project Files</strong>
-                    </div>
-                    <p className="card-text d-flex align-items-center justify-content-center p-3 ">
-                      No files uploaded yet
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-            </section>
-          </div>}
-      </div>
-    </Layout>
-  );
-};
+    return (
+        <Layout>
+            <main> <br /><br />
+                <Container>
+                    <Row>
+                        <h3 id="project_name"><strong>{projectName}</strong></h3>
+                    </Row>
+                    <Row className="bg-light p-3">
+                        <Col>
+                            <p>Created By</p>
+                            <p id="project_author">{author}</p>
+                        </Col>
+                        <Col>
+                            <p>Date Created</p>
+                            <p>2020-08-30</p>
+                        </Col>
+                        <Col>
+                            <p>Last Updated</p>
+                            <p>2020-08-30</p>
+                        </Col>
+                        <Col className="mx-auto justify-content-end">
+                            <Button href="/createproject" variant="primary" size="lg">Edit Project</Button>
+                        </Col>
+                    </Row>
+                </Container><br />
+            
+                <Container>
+                    <Row>
+                        <Col>
+                            <h3>Project Abstract</h3>
+                            <hr className="solid" />
+                            <p id="project_abstract">{abstract}</p><br/><br/>
+                            <Form name="projectComment"> 
+                                <Form.Group>
+                                    <Form.Label><strong>Comments:</strong></Form.Label>
+                                    <Form.Control as="textarea" name="comments" rows={4} cols={50} placeholder="Leave a comment" />
+                                </Form.Group>
+                                <Button variant="primary" type="submit">Submit</Button>
+                            </Form>
+                            <hr className="solid" />
+                            <p align="center">No comments added yet</p>
+                        </Col>
+                        <Col>
+                            <h3>Project details</h3>
+                            <hr className="solid" />
+                            <InputGroup>
+                                <Form.File id="custom-file" label="Custom file input" custom />
+                                <InputGroup.Append>
+                                    <Button variant="primary" type="button" name="projectFile">Upload</Button>
+                                </InputGroup.Append>
+                            </InputGroup>
+                            <hr className="solid" />
+                            <Card>
+                                <Card.Header>
+                                    Author(s)
+                                </Card.Header>
+                                <Card.Body>
+                                    <Card.Text><p align="center" id="project_authors">{authors}</p></Card.Text>
+                                </Card.Body>
+                                <Card.Footer id="project_tags">
+                                    {tags}
+                                </Card.Footer>
+                            </Card><br/>
+                            <Card>
+                                <Card.Header>
+                                    Project files
+                                </Card.Header>
+                                <Card.Body>
+                                    <Card.Text><p align="center">No files uploaded yet</p></Card.Text>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    </Row>
+                </Container>
+        </main><br/>
+        </Layout>
+    )
+}
 
 export default Project;

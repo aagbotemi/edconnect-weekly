@@ -1,17 +1,17 @@
-import React from 'react'
-import Footer from './Footer'
-import Header from './Header'
+import React from 'react';
+import Footer from './Footer';
+import Header from './Header';
 
-function Layout(props) {
-    return(
+const Layout = (props) => {
+    return (
         <>
-            <Header/>
-            <main  className=" container">
-                {props.children}
-            </main>
-            <Footer/>
+            <Header />
+                <main className="mx-auto">
+                    {props.children}
+                </main>
+            <Footer />
         </>
     )
 }
 
-export default Layout
+export default Layout;

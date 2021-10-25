@@ -1,159 +1,118 @@
-import React, {useState, useEffect} from 'react';
-// import {useHistory} from 'react-router-dom';
-import {Form, Button, FormControl} from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Alert, Button, Form } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 import Layout from './shared/Layout';
 
-const CreateProject = () => {
-    /*
-    const getCookie = () => {
-        const cookieName = 'uid';
+const CreateProject = (props) => {
+  const [projectName, setProjectName] = useState('');
+  const [abstract, setAbstract] = useState('');
+  const [authors, setAuthors] = useState('');
+  const [tags, setTags] = useState('');
+  const [alerts, setAlerts] = useState([]);
+  const [alertBlock, setAlertBlock] = useState(false);
+  let history = useHistory();
 
-        const cookieArr = document.cookie.split(';')
-
-        for (let i = 0; i < cookieArr.length; i++) {
-            let cookiePair = cookieArr[i].split('=')
-
-            if (cookieName === cookiePair[0].trim()) {
-                return cookiePair[1];
-            } else {
-                return '';
-            }
-        }
+  const handleInputChange = event => {
+    const {name, value} = event.target
+    switch (name) {
+        case 'name':
+            setProjectName(value)
+            break;
+        case 'abstract':
+            setAbstract(value)
+            break;
+        case 'authors':
+            setAuthors(value)
+            break;
+        case 'tags':
+            setTags(value)
+            break;
     }
-    const redirect = useHistory(); 
+  }
 
-    const userId = getCookie();
-
-    if (userId === '') {
-        redirect.push('/login');
+  let cookieCheck = document.cookie.split(';').some((item) => item.trim().startsWith('uid='));
+    if (!cookieCheck) {
+      history.push('/login'); // redirect user to login.html page if cookie doesn't exist
     }
-   */
-    const history = useHistory ();
-    const [error, setError] = useState ([]);
-    const [createProject, setCreateProject] = useState ({
-        name: '',
-        abstract: '',
-        tags: '',
-        authors: '',
-    });
-    const handleChange = e => {
-        const {name, value} = e.target;
-        setCreateProject ({...createProject, [name]: value});
-    };
-    const {name, tags, abstract, authors} = createProject;
 
-    const submitProject = e => {
-        e.preventDefault ();
-        const projectInfo = {
-            name,
-            tags: tags.split (','),
-            abstract,
-            authors: authors.split (','),
-        };
+  const handleSubmit = event => {
+    event.preventDefault();
+    let projectInfo = {
+        name : projectName,
+        authors : authors.split(","),
+        abstract : abstract,
+        tags : tags.split(",")
+    }
 
-        fetch ('/api/projects', {
-            method: 'POST',
-            body: JSON.stringify(projectInfo),
-            headers: {
-                'Content-Type': 'application/json; charset=UTF-8',
-            },
+
+    fetch('/api/projects', {
+        method: 'POST',
+        body: JSON.stringify(projectInfo), // All form data
+        headers: {
+            'Content-Type': 'application/json',
+        },
         })
-        .then (response => response.json ())
-        .then (response => {
-            if (response.status === 'ok') {
-                history.push ('/');
-                // setError ('');
-            } else {
-                setError(response.errors);
+        .then(response => response.json())
+        .then ((response) => {
+            if (response.status === "ok") {
+                history.push("/"); // redirect user to home page
+            } else if (response.status !== "ok") {
+                setAlertBlock(true);
+                setAlerts(response.errors); // Supposed to print error message.
             }
-        });
-    };
+        })
+  }
 
-    useEffect (() => {
-        const timerError = setTimeout (() => {
-            setError ([]);
-        }, 3000);
-        return () => clearTimeout(timerError);
-    }, [error]);
-
-    const checkForCookies=()=>{
-        let cookieValue = document.cookie
-        cookieValue = cookieValue.split('=')
-        cookieValue = cookieValue[1]
-        return cookieValue
-    }
-
-    if(!checkForCookies()) history.push("/login")
-
-    return(checkForCookies() ?   
+    return(
         <Layout>
-            <section name="search" className="container mb-5 mt-4 mx-auto w-75">
-                {error
-                    ? <div>
-
-                        <div className="alert alert-danger">
-                            {error.length > 0 &&
-                            error.map ((err, index) => (
-                                <>
-                                <strong key={index}>{err}</strong>< br/></>
-                            ))}
-                        </div>
-                    </div>
-                    : null}
-                <div>
-                    <h3><strong>Submit Project</strong></h3>
-                </div>
-                <Form
-                    id="createProjectForm"
-                    className="form-row"
-                    onSubmit={submitProject}
-                    name="submitProject"
-                >
-                    <Form.Label htmlFor="name">Project Name:</Form.Label>
-
-                    <FormControl
-                    type="text"
-                    name="name"
-                    id="name"
-                    placehoder="Enter project name"
-                    value={name}
-                    onChange={handleChange}
-                    />
-
-                    <Form.Label htmlFor="abstract">Project Abstract:</Form.Label>
-                    <Form.Control
-                    as="textarea"
-                    name="abstract"
-                    rows={3}
-                    value={abstract}
-                    onChange={handleChange}
-                    />
-                    <Form.Label htmlFor="authors">Authors:</Form.Label>
-                    <FormControl
-                    type="text"
-                    id="authors"
-                    name="authors"
-                    value={authors}
-                    placeholder="enter author name separated by comma"
-                    onChange={handleChange}
-                    />
-                    <Form.Label>Tag(s):</Form.Label>
-                    <FormControl
-                    type="text"
-                    name="tags"
-                    id="tags"
-                    value={tags}
-                    onChange={handleChange}
-                    placeholder="use # to tag project with different topics (eg #javascript, #mongodb, etc)"
-                    />
-
-                    <Button variant="primary" className="mt-4" type="submit">
-                    Continue
-                    </Button>
-                </Form>
-            </section>
+          <main class="mx-auto w-50 p-3">
+            <h3>Submit Project</h3>
+            <Form name="submitProject" onSubmit={handleSubmit} id="createProjectForm"> 
+                  {alertBlock && (
+                  <Alert variant="danger">
+                    {alerts.map((anyAlert) => { return <> {anyAlert} <br/></>})}
+                  </Alert>)}
+                  <Form.Group>
+                    <Form.Label for="name" class="form-label">Project Name:</Form.Label>
+                    <Form.Control type="text" 
+                      id="name" 
+                      name="name" 
+                      placeholder="Enter project name"
+                      value={projectName}
+                      onChange={handleInputChange} />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label for="abstract" class="form-label">Project Abstract:</Form.Label>
+                    <Form.Control as="textarea" 
+                      id="abstract" 
+                      name="abstract" 
+                      rows={4} cols={100}
+                      value={abstract}
+                      onChange={handleInputChange} />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label for="authors" class="form-label">Author(s):</Form.Label>
+                    <Form.Control type="text" 
+                      id="authors" 
+                      name="authors" 
+                      placeholder="Enter author names (seperated by comma)"
+                      value={authors}
+                      onChange={handleInputChange} />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label for="tags" class="form-label">Tag(s):</Form.Label>
+                    <Form.Control type="text" 
+                      id="tags" 
+                      name="tags" 
+                      placeholder="Use # to tag project with different topics"
+                      value={tags}
+                      onChange={handleInputChange} />
+                  </Form.Group>
+                  <Button variant="primary" type="submit">Continue</Button>
+            </Form>
+        </main><br></br>
         </Layout>
-    : null)
+    )
 }
 
 export default CreateProject;

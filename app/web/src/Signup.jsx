@@ -1,242 +1,187 @@
-import React, {useState, useEffect} from 'react';
-// import {useHistory} from 'react-router-dom';
-import {Form, Row, Col, Button} from 'react-bootstrap';
-import Layout from './shared/Layout';
-// import Cookies from 'universal-cookie';
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import { Alert, Button, Col, Form, Row } from 'react-bootstrap';
+import Layout from './shared/Layout'
 
-const Signup = () => {
-    const [programs, setPrograms] = useState ([]);
-    const [graduationYears, setGraduationYears] = useState ([]);
-    const [regInfo, setRegInfo] = useState ({
-        firstname: '',
-        lastname: '',
-        email: '',
-        password: '',
-        matricNumber: '',
-        program: '',
-        graduationYear: '',
-    });
-    const [error, setError] = useState('');
-    
-    useEffect(() => {
-        fetch ('/api/programs', {
-            method: 'GET',
-            header: {
-                'Content-Type': 'application/json; charset=UTF-8',
-            },
-        })
-        .then(response => response.json())
-        .then(response => setPrograms(response));
-    }, []);
-    
-    useEffect(() => {
-        fetch ('/api/graduationYears', {
-            method: 'GET',
-            header: {
-                'Content-Type': 'application/json; charset=UTF-8',
-            },
-        })
-        .then(response => response.json())
-        .then(response => setGraduationYears(response));
-    }, []);
+const Signup = (props) => {
+    const [programs, setPrograms] = useState([]);
+    const [gradYears, setGradYears] = useState([]);
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [matricNumber, setMatricNmber] = useState('');
+    const [programName, setProgramName] = useState('');
+    const [graduateYear, setGraduateYear] = useState('');
+    const [alerts, setAlerts] = useState([]);
+    const [alertBlock, setAlertBlock] = useState(false);
+    let history = useHistory();
 
-    let history = useHistory ();
-    const signup = e => {
-        e.preventDefault ();
-        fetch ('/api/register', {
-            method: 'POST',
-            body: JSON.stringify(regInfo),
-            headers: {
-                'Content-Type': 'application/json; charset=UTF-8',
-            },
-        })
-        .then (response => response.json())
-        .then (res => {
-            console.log (res);
-            if (res.status === 'ok') {
-                document.cookie = `uid=${res.data.id}; path=/`; // store the id in a cookie named uid.
-                    // const userCookie = new Cookies()
-                    // const userId = res.data.id;
-                    // const key = 'uid';
-                    // const value = encodeURIComponent(userId);
-                    // userCookie.set(key, value, {path: '/'});
-                history.push ('/');
-                // setError ('');
-            } else if (res.status !== 'ok') {
-                // step 4 [3d]
-                setError (res.errors);
+    useEffect(() => {
+        // Get all getables
+        fetch("/api/programs")
+          .then(res => res.json())
+          .then(
+            (result) => {
+              setPrograms(result);
             }
-        });
-    };
+          )
 
-    const {
-        firstname,
-        lastname,
-        email,
-        password,
-        matricNumber,
-        program,
-        graduationYear,
-    } = regInfo;
+        fetch("/api/graduationYears")
+          .then(res => res.json())
+          .then(
+            (result) => {
+              setGradYears(result);
+            }
+          )
+      }, [])
 
-    const handleChange = e => {
-        const {name, value} = e.target;
-        setRegInfo ({...regInfo, [name]: value});
-    };
+    // Post all postables
+    // Add event listener when the button is clicked.
+    const handleInputChange = event => {
+        const {name, value} = event.target
+        switch (name) {
+            case 'firstName':
+                setFirstName(value)
+                break;
+            case 'lastName':
+                setLastName(value)
+                break;
+            case 'email':
+                setEmail(value)
+                break;
+            case 'password':
+                setPassword(value)
+                break;
+            case 'matricNumber':
+                setMatricNmber(value)
+                break;
+            case 'program':
+                setProgramName(value)
+                break;
+            case 'graduationYear':
+                setGraduateYear(value)
+        }
+    }
 
-    useEffect (() => {
-        const errorTimer = setTimeout (() => {
-            setError ('');
-        }, 3000);
-        return () => clearTimeout(errorTimer);
-    }, [error]);
+    const handleSubmit = event => {
+        event.preventDefault();
+        let regInfo = {
+            firstname :  firstName,
+            lastname : lastName,
+            email : email,
+            password : password,
+            matricNumber : matricNumber,
+            program : programName,
+            graduationYear : graduateYear,
+        }
 
+        fetch('/api/register', {
+            method: 'POST',
+            body: JSON.stringify(regInfo), // All form data
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            })
+            .then(response => response.json())
+            .then ((response) => {
+                if (response.status === "ok") {
+                    document.cookie = `uid=${response.data.id}; path=/ `; // I am to store the id in a cookie named uid.
+                    history.push("/"); // redirect user to home page
+                } else if (response.status !== "ok") {
+                    setAlertBlock(true);
+                    setAlerts(response.errors); // Supposed to print error message.
+                }
+            })
+    }
+    
     return (
         <Layout>
-            <Form id="signupForm">
-                <div id="containerlogin">
-                    <h1>Sign Up</h1>
-                    {error
-                        ? <div>
-                            <div className="alert alert-danger">
-                            {error.length > 0 &&
-                                error.map ((err, index) => (
-                                <>
-                                <strong key={index}>{err}</strong>< br/></>
-                                ))}
-                            </div>
-                        </div>
-                        : null}
-                <Row>
-                    <Col xs={12} md={6}>
-                    <Form.Group>
-                        <Form.Label>First Name</Form.Label>
-                        <Form.Control
-                        type="text"
-                        placeholder="Your First Name"
-                        name="firstName"
-                        id="yourfirstname"
-                        value={firstname}
-                        onChange={handleChange}
-                        />
-                    </Form.Group>
+            <main className="mx-auto w-50 p-3">
+            <h1>Signup</h1>
+            <Form id="signupForm" onSubmit={handleSubmit}> 
+                {alertBlock && (
+                  <Alert variant="danger">
+                    {alerts.map((anyAlert) => { return <> {anyAlert} <br/></>})}
+                  </Alert>)}
+                <Form.Group as={Row}>
+                    <Col>
+                        <Form.Label for="firstName">First Name:</Form.Label>
+                        <Form.Control type="text" 
+                            id="firstname" 
+                            name="firstName" 
+                            placeholder="First Name" 
+                            value={firstName}
+                            onChange={handleInputChange} />
                     </Col>
-                    <Col xs={12} md={6}>
-                    <Form.Group>
-                        <Form.Label>Last Name</Form.Label>
-                        <Form.Control
-                        type="text"
-                        placeholder="Your Last Name"
-                        name="lastname"
-                        id="yourlastname"
-                        value={lastname}
-                        onChange={handleChange}
-                        />
-                    </Form.Group>
+                    <Col>
+                        <Form.Label for="lastName">Last Name:</Form.Label>
+                        <Form.Control type="text" 
+                            id ="lastname" 
+                            name="lastName" 
+                            placeholder="Last Name"
+                            value={lastName}
+                            onChange={handleInputChange} />
                     </Col>
-                </Row>
-                <Row>
-                    <Col xs={12} md={6}>
-                    <Form.Group>
-                        <Form.Label>Email Address</Form.Label>
-                        <Form.Control
-                        type="email"
-                        placeholder="Your Email Address"
-                        name="email"
-                        id="yourEmailAddress"
-                        value={email}
-                        onChange={handleChange}
-                        />
-                    </Form.Group>
+                </Form.Group>
+                <Form.Group as={Row}>
+                    <Col>
+                        <Form.Label for="email">Email Address:</Form.Label>
+                        <Form.Control type="email" 
+                            id="email" 
+                            name="email" 
+                            placeholder="Your Email Address"
+                            value={email}
+                            onChange={handleInputChange} />
                     </Col>
-
-                    <Col xs={12} md={6}>
-                    <Form.Group>
-                        <Form.Label>Select programs</Form.Label>
-                        <Form.Control
-                        as="select"
-                        id={'language'}
-                        name="program"
-                        value={program}
-                        onChange={handleChange}
-                        >
-                        {programs &&
-                            programs.map ((value, index) => (
-                            <option key={index}>{value}</option>
-                            ))}
+                    <Col>
+                        <Form.Label for="password">Password:</Form.Label>
+                        <Form.Control type="password" 
+                            id="password" 
+                            name="password" 
+                            placeholder="Your password"
+                            value={password}
+                            onChange={handleInputChange} />
+                    </Col>
+                </Form.Group>
+                <Form.Group as={Row}>
+                    <Col>
+                        <Form.Label for="program">Program:</Form.Label>
+                        <Form.Control as="select" 
+                            name="program" 
+                            id="program"
+                            value={programName}
+                            onChange={handleInputChange}>
+                            <option>Select Program</option>
+                            {programs.map((program) => <option key={program}>{program}</option>)}
                         </Form.Control>
-                    </Form.Group>
                     </Col>
-                </Row>
-                <Row>
-                    <Col xs={12} md={6}>
-                    <Form.Group>
-                        <Form.Label>Graduation year</Form.Label>
-                        <Form.Control
-                        as="select"
-                        name="graduationYear"
-                        value={graduationYear}
-                        id="graduationYear"
-                        className="form-control"
-                        onChange={handleChange}
-                        >
-                        {graduationYears &&
-                            graduationYears.map((value, index) => (
-                            <option key={index}>{value}</option>
-                            ))}
+                    <Col>
+                        <Form.Label for="matricNumber">Matric Number:</Form.Label>
+                        <Form.Control type="text" 
+                            id="matricNumber" 
+                            name="matricNumber" 
+                            placeholder="16/2020"
+                            value={matricNumber}
+                            onChange={handleInputChange} />
+                    </Col>
+                    <Col>
+                        <Form.Label for="graduationYear">Graduation Year:</Form.Label>
+                        <Form.Control as="select" 
+                            name="graduationYear" 
+                            id="graduationYear"
+                            value={graduateYear}
+                            onChange={handleInputChange}>
+                            <option>Select Graduation Year</option>
+                            {gradYears.map((gradYear) => <option key={gradYear}>{gradYear}</option>)}
                         </Form.Control>
-                    </Form.Group>
                     </Col>
-
-                    <Col xs={12} md={6}>
-                    <Form.Group>
-                        <Form.Label>Password</Form.Label>
-
-                        <Form.Control
-                        name="password"
-                        value={password}
-                        onChange={handleChange}
-                        type="password"
-                        placeholder="Your Password"
-                        id="password"
-                        />
-                    </Form.Group>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs={12} md={6}>
-                    <Form.Group>
-                        <Form.Label>Matriculation Number</Form.Label>
-
-                        <Form.Control
-                        name="matricNumber"
-                        value={matricNumber}
-                        placeholder="e.g 10/2020"
-                        className="form-control"
-                        onChange={handleChange}
-                        type="text"
-                        id="matricNumber"
-                        />
-                    </Form.Group>
-
-                    </Col>
-                </Row>
-
-                <div className="text-left">
-                    <Button
-                    type="submit"
-                    onClick={signup}
-                    variant="primary"
-                    className="mb-4"
-                    id="signUpButton"
-                    >
-                    Sign Up
-                    </Button>
-                </div>
-                </div>
-            </Form>
+                </Form.Group>
+                <Button variant="primary" type="submit">Sign Up</Button>
+            </Form> <br/>
+            </main>
         </Layout>
-    );
-};
+    )
+}
 
 export default Signup;

@@ -1,78 +1,70 @@
-import React, {useState, useEffect} from 'react';
-import {Nav, Navbar, Form, FormControl, Button} from 'react-bootstrap';
-import {useHistory} from 'react-router';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import {Button, Form, FormControl, FormLabel, Nav, Navbar} from 'react-bootstrap';
 
 const Header = () => {
-    const [state, setState] = useState ('');
-    const [login] = useState('Login');
-    const history = useHistory ();
+    const [username, setUsername] = useState('');
+    const [biscuit, setBiscuit] = useState(false);
+    let history = useHistory();
 
-    const logout = e => {
-        e.preventDefault ();
-        document.cookie = `uid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-        history.push ('/');
-        setState ('');
-    };
-
-    useEffect (() => {
-        if (document.cookie) {
-            let cookieValue = document.cookie.split('=');
-            const uid = cookieValue[1];
-
-            fetch (`/api/users/${uid}`, {
-                method: 'GET',
-                header: {
-                    'Content-Type': 'application/json; charset=UTF-8',
-                },
-            })
-                .then (result => result.json())
-                .then (res => setState(res));
+    if (document.cookie) {
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for(var i=0;i < ca.length;i++) {
+                var c = ca[i];
+                while (c.charAt(0)===' ') c = c.substring(1,c.length);
+                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length,c.length);
+            }
+            return null;
         }
-    }, []);
+
+        
+        const cookieValue = getCookie("uid");
+        let cookieExists = cookieValue ? true : false;
+        if (cookieExists) {
+            fetch(`/api/users/${cookieValue}`)
+                .then(res => res.json())
+                .then(function(response) {
+                    setUsername(`Hi ${response.firstname}`);
+                    setBiscuit(true);
+                })
+        }
+    }
+
+    // When user clicks the logout link
+    function HandleLogout(event) {
+        document.cookie = "uid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; // Delete cookie
+        history.push('/') // Redirect to home page
+    }
+
 
     return (
-        <Navbar
-            id="header"
-            bg="primary"
-            variant="dark"
-            className="justify-content-between"
-        >
-            <Nav>
-                <Navbar.Brand href="/">Project Explorer</Navbar.Brand>
-                <Form inline className="d-flex">
-                    <FormControl type="text" placeholder="Search Projects" />
+        <Navbar bg="primary" expand="lg" variant="dark full">
+            <Navbar.Brand href="/">Project Explorer</Navbar.Brand>
+            <Navbar.Collapse>
+                <Form inline name="searchForm">
+                    <FormLabel className="sr-only" for="searchForm">Search Projects:</FormLabel>
+                    <FormControl type="text" name="searchForm" placeholder="Search Projects" />
                     <Button variant="outline-light" type="submit">Search</Button>
                 </Form>
-                <Nav>
-                    <Nav.Link href="/projects/">
-                        Projects
-                    </Nav.Link>
-
-                    <Nav.Link href={state ? '/projects/submit' : '/login'}>
-                        Submit
-                    </Nav.Link>
+                <Nav className="mr-auto">
+                    <Nav.Link href="/projects/submit">Projects</Nav.Link>
                 </Nav>
-            </Nav>
-            <Nav className="d-flex justify-content-end">
-                {state
-                    ? state &&
-                        <Nav.Link id="logout" onClick={logout}>
-                            Logout
-                        </Nav.Link>
-                    : <Nav.Link href="/signup">Sign Up</Nav.Link>
-                }
 
-                {state
-                    ? state &&
-                        <Nav.Link
-                            id="username"
-                            href={`/projects/${state.id}`}
-                        >{`Hi, ${state.firstname}`}</Nav.Link>
-                    : <Nav.Link href="/login">{login}</Nav.Link>
-                }
-            </Nav>
-
+                <Nav className="ml-auto">
+                    {biscuit ? 
+                    (<>
+                    <Nav.Link href="#" id="logout" onClick={HandleLogout}>Logout</Nav.Link>
+                    <Navbar.Text id="username">{username}</Navbar.Text>
+                    </>) : (<>
+                    <Nav.Link href="/signup" id="signup">Sign Up</Nav.Link>
+                    <Nav.Link href="/login" id="login">Login</Nav.Link>
+                    </>)}
+                </Nav>
+            </Navbar.Collapse>
         </Navbar>
-    );
-};
+    )
+}
+
 export default Header;
