@@ -114,7 +114,7 @@ const Signup = () => {
                         <Form.Control
                         type="text"
                         placeholder="Your First Name"
-                        name="firstname"
+                        name="firstName"
                         id="yourfirstname"
                         value={firstname}
                         onChange={handleChange}
