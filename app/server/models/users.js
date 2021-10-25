@@ -1,7 +1,7 @@
 const DataModel = require('./data_model');
 
 class User {
-    constructor(id, firstname, lastname, email, password, matricNumber, program, graduationYear) {
+    constructor(id, firstname, lastname, email, password, matricNumber, program, graduationYear){
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -12,61 +12,62 @@ class User {
         this.graduationYear = graduationYear;
     }
 
-    getFullName() {
-        return `${this.firstname} ${this.lastname}`
+    getFullName(){
+        return this.firstname + " " + this.lastname;
     }
 }
 
 class Users extends DataModel {
-    authenticate(email, password) {
-        let authenticatedUser = this.data.find(item => item.email === email && item.password === password)
-        return authenticatedUser ? true : false;
+    authenticate(email, password){
+        for (const obj of this.data) {
+            if (obj.email === email && obj.password === password){
+                return true;
+            }
+        }; 
+        
+        return false;
     }
 
-    getByEmail(email) {
-        let userEmail = this.data.find(item => item.email === email)
-        return userEmail ? userEmail : null;
+    getByEmail(email){
+        for (const obj of this.data) {
+            if (obj.email === email){
+                return obj;
+            }
+        };
+        return null;       
     }
 
-    getByMatricNumber(matricNumber) {
-        let userMatricNumber = this.data.find(item => item.matricNumber === matricNumber)
-        return userMatricNumber ? userMatricNumber : null
+    getByMatricNumber(matricNumber){
+        for (const obj of this.data) {
+            if (obj.matricNumber === matricNumber){
+                return obj;
+            }
+        };
+        return null;       
     }
 
-    validate(obj) {
-        // let validatedUser = false
-        this.errors = []
-        let errorMsg
+    validate(obj){
+        this.errors = [];
 
-        for (const key in obj) {
-            if (obj[key] === "" || obj[key] === null || obj[key] === undefined) {
-                errorMsg = `${key} should not be empty`
-                this.errors.push(errorMsg)
+        for (const property in obj) {
+            if(obj[property] === ""){
+                this.errors.push(`${property} should not be empty`);
             }
         }
 
-        let emailCheck = this.data.find(item => item.email === obj.email);
-        if (emailCheck) {
-            errorMsg = `A user with ${obj.email} address already exists`
-            this.errors.push(errorMsg)
-        }
-        
-        let matricNumberCheck = this.data.find(item => item.matricNumber === obj.matricNumber);
-        if (matricNumberCheck) {
-            errorMsg = `A user with ${obj.matricNumber} already exists`
-            this.errors.push(errorMsg)
+        if (this.getByEmail(obj.email)){
+            this.errors.push(`A user with specified email address already exists`);
         }
 
-        let passwordCheck = obj.password.length < 7;
-        if (passwordCheck) {
-            errorMsg = 'Password should have at least 7 characters'
-            this.errors.push(errorMsg)
+        if (this.getByMatricNumber(obj.matricNumber)){
+            this.errors.push(`A user with specified matric number already exists`);
         }
 
-        if (this.errors.length == 0) {
-            return true
+        if(obj.password.length < 7){
+            this.errors.push("Password should have at least 7 characters");
         }
-        return false
+
+        return (this.errors.length > 0) ? false : true;
     }
 }
 

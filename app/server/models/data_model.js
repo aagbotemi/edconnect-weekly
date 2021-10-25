@@ -9,11 +9,27 @@ class DataModel {
     }
 
     getById(id) {
-        let user = this.data.find(item => item.id == id)
-        return user ? user : null
+        for (const obj of this.data) {
+            if (obj.id === id){
+                return obj;
+            }
+        };
+        return null;
     }
-    
-    save(obj) {
+
+    getIndexOf(id){
+        let index = -1;
+
+        for (const obj of this.data) {
+            index++;
+            if (obj.id === id){
+                return index;
+            }
+        };
+        return index;
+    }
+
+    save(obj){
         if (this.validate(obj)) {
             this.data.push(obj);
             return true;
@@ -21,30 +37,34 @@ class DataModel {
         return false;
     }
 
-    update(obj, id) {
-        let updatedUser = this.data.find(item => item.id === id);
-        if (updatedUser) {
-            for (const key in obj) {
-                updatedUser[key] = obj[key]
+    update(obj, id){
+        const index = this.getIndexOf(id);
+        this.errors = [];
+
+        if(index > -1) {
+            const temp = this.data[index];
+            for (const property in obj) {
+                temp[property] = obj[property];
             }
-            return true
+            this.data[index] = temp; 
+            return true;
         }
-        return false
-    }
-
-    delete(id) {
-        let deletedUser = this.data.find(item => item.id === id);
-        let index = this.data.indexOf(deletedUser)
-        if (deletedUser) {
-            this.data.splice(index, 1)
-            return true
-        }
-        return false
-    }
-
-    // this method will be overriden in the sub classes
-    validate(obj) {
+        this.errors.push("object id not found");
         return false;
+    }
+
+    delete(id){
+        let index = this.getIndexOf(id);
+        if (index > -1){
+            this.data.splice(index, 1);
+            return true;
+        }
+        return false; 
+    }
+
+    validate(obj){
+        // this method will be overriden in the sub classes
+        return true
     }
 }
 

@@ -1,13 +1,11 @@
 import React from 'react';
 
-const Footer =() => {
+const Footer = () => {
     return (
-        <footer id="footer" className=" container bg-light mx-auto">
-            <span id="footer-span" className="text-muted">
-                Project Explorer &#169; 2020 &middot;{' '}
-            </span>
-            <strong>Edconnect</strong>
+        <footer className="myfooter">
+            <p align="right">Project Explorer <span>&#169;</span> 2020 - <strong>Edconnect</strong></p>
         </footer>
-    );
-};
-export default Footer
+    )
+}
+
+export default Footer;

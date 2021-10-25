@@ -10,8 +10,9 @@ router.get('/', (req, res) => {
 });
 
 router.get('/logout', (req, res) => {
+  // add code to destroy the session/cookie
   req.session.destroy();
   res.redirect('/')
-})
+});
 
 module.exports = router;

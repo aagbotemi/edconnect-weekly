@@ -1,4 +1,3 @@
-// imports
 const fs = require("fs");
 const path = require("path");
 const Projects = require("../models/projects").Projects;
@@ -49,7 +48,7 @@ const getAll = () => {
   const projects = new Projects();
   projects.data = getFileAsJson(projectsFile).data;
 
-  return projects.getAll().reverse();
+  return projects.getAll();
 };
 
 module.exports = {
