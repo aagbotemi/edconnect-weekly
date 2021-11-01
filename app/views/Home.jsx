@@ -7,12 +7,12 @@ const Home = (props) => {
     return (
         <Layout user={props.user}>
             <main className="mx-auto">
-                {/* <Jumbotron>
+                <Jumbotron>
                     <h1>Project Explorer</h1>
                     <p>Project Explorer is a repository for final year projects across all departments at your institution. You can submit your project and search projects submitted by others to learn from.</p>
                     <Button variant="primary" href="/signup" className="mr-2">Get Started</Button>
                     <Button variant="secondary" href="/login">Login</Button>
-                </Jumbotron> */}
+                </Jumbotron>
 
                 <Container>
                     <Row className="showcase justify-content-between">
