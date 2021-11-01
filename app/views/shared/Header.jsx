@@ -7,7 +7,7 @@ const Header = (props) => {
         <Navbar bg="primary" expand="lg" variant="dark full">
             <Navbar.Brand href="/">Project Explorer</Navbar.Brand>
             <Navbar.Collapse>
-                <Form inline name="searchForm">
+                <Form name="searchForm">
                     <FormLabel className="sr-only">Search Projects:</FormLabel>
                     <FormControl type="text" name="searchForm" placeholder="Search Projects" />
                     <Button variant="outline-light" type="submit">Search</Button>
@@ -24,7 +24,8 @@ const Header = (props) => {
                         </>) : (<>
                         <Nav.Link href="/signup" id="signup">Sign Up</Nav.Link>
                         <Nav.Link href="/login" id="login">Login</Nav.Link>
-                        </>)}
+                        </>)
+                    }
                 </Nav>
             </Navbar.Collapse>
         </Navbar>

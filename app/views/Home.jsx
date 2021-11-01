@@ -4,8 +4,19 @@ import Layout from './shared/Layout';
 
 const Home = (props) => {
 
+    const [projects, setProjects] = useState([]);
+    useEffect(() => {
+        fetch("api/projects")
+          .then(res => res.json())
+          .then(
+            (result) => {
+              setProjects(result.slice(0,4));
+            }
+          )
+    }, [])
+    
     return (
-        <Layout user={props.user}>
+        <Layout>
             <main className="mx-auto">
                 <Jumbotron>
                     <h1>Project Explorer</h1>
@@ -16,10 +27,10 @@ const Home = (props) => {
 
                 <Container>
                     <Row className="showcase justify-content-between">
-                        {props.project.reverse().slice(0,4).map(project => <Col>
+                        {projects.map(project => <Col key={project.id}>
                             <Card>
                                 <Card.Body>
-                                    <Card.Title><a href={`/project/${project.id}`}>{project.name}</a></Card.Title>
+                                    <Card.Title><a href={`/projects/${project.id}`}>{project.name}</a></Card.Title>
                                     <Card.Subtitle>{project.authors}</Card.Subtitle>
                                     <Card.Text>{project.abstract}</Card.Text>
                                     <Card.Footer>{project.tags}</Card.Footer>
